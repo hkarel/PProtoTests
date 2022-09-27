@@ -5,6 +5,7 @@ PProtoDemoTests {
     name: "PProtoTests (Project)"
 
     references: [
+        "src/catch2/catch2.qbs",
         "src/pproto/pproto.qbs",
         "src/rapidjson/rapidjson.qbs",
         "src/shared/shared.qbs",

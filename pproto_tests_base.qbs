@@ -1,4 +1,7 @@
 import qbs
+import qbs.File
+import qbs.FileInfo
+import qbs.TextFile
 import "qbs/imports/QbsUtl/qbsutl.js" as QbsUtl
 
 Project {
@@ -9,37 +12,43 @@ Project {
     property bool useSystemSodium: false // Использовать системную libsodium
     property string sodiumVersion: "1.0.18"
 
-    //readonly property var projectVersion: projectProbe.projectVersion
-    //readonly property string projectGitRevision: projectProbe.projectGitRevision
+    Probe {
+        id: projectProbe
 
-//    Probe {
-//        id: projectProbe
-//        property var projectVersion;
-//        property string projectGitRevision;
+        readonly property string projectBuildDirectory:  project.buildDirectory
+        readonly property string projectSourceDirectory: project.sourceDirectory
 
-//        readonly property string projectBuildDirectory:  project.buildDirectory
-//        readonly property string projectSourceDirectory: project.sourceDirectory
+        configure: {
+            File.makePath(projectBuildDirectory + "/catch2");
 
-//        configure: {
-//            projectVersion = QbsUtl.getVersions(projectSourceDirectory + "/VERSION");
-//            projectGitRevision = QbsUtl.gitRevision(projectSourceDirectory);
-//        }
-//    }
+            var conffile = new TextFile(projectBuildDirectory + "/catch2/catch_user_config.hpp", TextFile.WriteOnly);
+            conffile.write("// Dummy file, required for compatibility with CMAKE build system\n");
+            conffile.close();
+        }
+    }
 
     property var cppDefines: {
         var def = [
-          //"VERSION_PROJECT=\"" + projectVersion[0] + "\"",
-          //"VERSION_PROJECT_MAJOR=" + projectVersion[1],
-          //"VERSION_PROJECT_MINOR=" + projectVersion[2],
-          //"VERSION_PROJECT_PATCH=" + projectVersion[3],
-          //"GIT_REVISION=\"" + projectGitRevision + "\"",
             "QDATASTREAM_VERSION=QDataStream::Qt_5_12",
           //"QDATASTREAM_BYTEORDER=QDataStream::LittleEndian",
             "PPROTO_VERSION_LOW=0",
             "PPROTO_VERSION_HIGH=0",
             "PPROTO_JSON_SERIALIZE",
             "PPROTO_QBINARY_SERIALIZE",
-            "PPROTO_UDP_SIGNATURE=\"PPDM\"",
+            "PPROTO_UDP_SIGNATURE=\"PPTS\"",
+            //--- Catch2 ---
+            "CATCH_CONFIG_COUNTER",
+            "CATCH_CONFIG_CPP11_TO_STRING",
+            "CATCH_CONFIG_CPP17_BYTE",
+            "CATCH_CONFIG_CPP17_OPTIONAL",
+            "CATCH_CONFIG_CPP17_STRING_VIEW",
+            "CATCH_CONFIG_CPP17_UNCAUGHT_EXCEPTIONS",
+            "CATCH_CONFIG_CPP17_VARIANT",
+            "CATCH_CONFIG_GLOBAL_NEXTAFTER",
+            "CATCH_CONFIG_POSIX_SIGNALS",
+          //"CATCH_CONFIG_USE_ASYNC", ??
+            "CATCH_CONFIG_NO_WCHAR",
+          //"CATCH_CONFIG_PREFIX_ALL", ??
         ];
 
         if (useSodium === true || useSystemSodium === true)
