@@ -70,7 +70,7 @@ TEST_CASE( "Deserialize optional fields", "[json]" )
         REQUIRE( a.p3 == 20        );
         REQUIRE( a.p4 == "string2" ); // default value
     }
-    SECTION( "Filling out mandatory and optional fields (skip 'p2' field)" )
+    SECTION( "Filling out mandatory and optional fields (skip p2 field)" )
     {
         QByteArray json = R"({"p1":10,"p3":20,"p4":"string"})";
 
@@ -84,7 +84,7 @@ TEST_CASE( "Deserialize optional fields", "[json]" )
         REQUIRE( a.p3 == 20        );
         REQUIRE( a.p4 == "string"  );
     }
-    SECTION( "Filling out partially mandatory fields (skip 'p3' field)" )
+    SECTION( "Filling out partially mandatory fields (skip p3 field)" )
     {
         QByteArray json = R"({"p1":10,"p2":"string"})";
 
@@ -111,7 +111,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
 
-        REQUIRE( al.v3.length() == 3      );
+        REQUIRE( al.v3.count() == 3       );
 
         REQUIRE( al.v1 == 10              );
         REQUIRE( al.v2 == "string"        );
@@ -128,7 +128,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
         REQUIRE( al.v3[2].p3 == 23        );
         REQUIRE( al.v3[2].p4 == "string3" );
     }
-    SECTION( "Filling out mandatory fields (skip 'v2' field)" )
+    SECTION( "Filling out mandatory fields (skip v2 field)" )
     {
         QByteArray json = R"(
             {"v1":10,
@@ -140,7 +140,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
 
-        REQUIRE( al.v3.length() == 1      );
+        REQUIRE( al.v3.count() == 1       );
 
         REQUIRE( al.v1 == 10              );
         REQUIRE( al.v2 == "string1"       ); // default value
@@ -149,7 +149,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
         REQUIRE( al.v3[0].p3 == 21        );
         REQUIRE( al.v3[0].p4 == "string"  );
     }
-    SECTION( "Filling out mandatory and optional fields (skip 'v3.p2[1]', 'v3.p4[2]' fields)" )
+    SECTION( "Filling out mandatory and optional fields (skip v3.p2[1], v3.p4[2] fields)" )
     {
         QByteArray json = R"(
             {"v1":10,"v2":"string",
@@ -163,7 +163,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
 
-        REQUIRE( al.v3.length() == 3      );
+        REQUIRE( al.v3.count() == 3       );
 
         REQUIRE( al.v1 == 10              );
         REQUIRE( al.v2 == "string"        );
@@ -180,7 +180,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
         REQUIRE( al.v3[2].p3 == 23        );
         REQUIRE( al.v3[2].p4 == "string2" ); // default value
     }
-    SECTION( "Filling out partially mandatory fields (skip 'v3.p3[0]' field)" )
+    SECTION( "Filling out partially mandatory fields (skip v3.p3[0] field)" )
     {
         QByteArray json = R"(
             {"v1":10,"v2":"string",
@@ -193,6 +193,81 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
         pproto::SResult sr = al.fromJson(json);
         ALOG_FLUSH();
         REQUIRE_FALSE( bool(sr) == true );
+    }
+}
+
+TEST_CASE( "Deserialize list field from NULL", "[json]" )
+{
+    SECTION( "Filling out all fields" )
+    {
+        QByteArray json = R"(
+            {"v1":10,"v2":"string",
+             "v3":[{"p1":11,  "p2":null,     "p3":21,  "p4":"string1"},
+                   {"p1":null,"p2":"string2","p3":null,"p4":"string2"},
+                   {"p1":13,  "p2":"string3","p3":23,  "p4":null}]}
+        )";
+
+        pproto::data::Alist al;
+        pproto::SResult sr = al.fromJson(json);
+        ALOG_FLUSH();
+        REQUIRE( bool(sr) == true );
+
+        REQUIRE( al.v3.count() == 3       );
+
+        REQUIRE( al.v1 == 10              );
+        REQUIRE( al.v2 == "string"        );
+        REQUIRE( al.v3[0].p1 == 11        );
+        REQUIRE( al.v3[0].p2 == ""        );
+        REQUIRE( al.v3[0].p3 == 21        );
+        REQUIRE( al.v3[0].p4 == "string1" );
+        REQUIRE( al.v3[1].p1 == 0         );
+        REQUIRE( al.v3[1].p2 == "string2" );
+        REQUIRE( al.v3[1].p3 == 0         );
+        REQUIRE( al.v3[1].p4 == "string2" );
+        REQUIRE( al.v3[2].p1 == 13        );
+        REQUIRE( al.v3[2].p2 == "string3" );
+        REQUIRE( al.v3[2].p3 == 23        );
+        REQUIRE( al.v3[2].p4 == ""        );
+    }
+    SECTION( "Filling out mandatory fields (v2 is NULL)" )
+    {
+        QByteArray json = R"(
+            {"v1":10,"v2":null,
+             "v3":[{"p1":11,"p2":"string","p3":21,"p4":"string"}]}
+        )";
+
+        pproto::data::Alist al;
+        pproto::SResult sr = al.fromJson(json);
+        ALOG_FLUSH();
+        REQUIRE( bool(sr) == true );
+
+        REQUIRE( al.v3.count() == 1       );
+
+        REQUIRE( al.v1 == 10              );
+        REQUIRE( al.v2 == ""              );
+        REQUIRE( al.v3[0].p1 == 11        );
+        REQUIRE( al.v3[0].p2 == "string"  );
+        REQUIRE( al.v3[0].p3 == 21        );
+        REQUIRE( al.v3[0].p4 == "string"  );
+    }
+    SECTION( "Filling out v3 as NULL)" )
+    {
+        QByteArray json = R"(
+            {"v1":10,"v2":"string","v3":null}
+        )";
+
+        pproto::data::Alist al;
+        al.v3 = {{1, "123", 2, "345"}, {3, "456", 4, "789"}};
+
+        REQUIRE( al.v3.count() == 2 );
+
+        pproto::SResult sr = al.fromJson(json);
+        ALOG_FLUSH();
+        REQUIRE( bool(sr) == true );
+
+        REQUIRE( al.v1 == 10        );
+        REQUIRE( al.v2 == "string"  );
+        REQUIRE( al.v3.count() == 0 );
     }
 }
 
