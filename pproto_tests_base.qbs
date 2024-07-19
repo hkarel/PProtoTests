@@ -5,7 +5,7 @@ import qbs.TextFile
 import "qbs/imports/QbsUtl/qbsutl.js" as QbsUtl
 
 Project {
-    minimumQbsVersion: "1.20.0"
+    minimumQbsVersion: "1.23.0"
     qbsSearchPaths: ["qbs"]
 
     property bool useSodium: false       // Использовать собранную libsodium (директория расположения /opt/sodium/1.0.18)
