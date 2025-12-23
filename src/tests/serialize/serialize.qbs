@@ -49,4 +49,13 @@ Project {
             "json/json05.cpp",
         ]
     }
+    SerializeBase {
+        name: "Json 06"
+        targetName: "json06"
+        condition: true
+
+        files: [
+            "json/json06.cpp",
+        ]
+    }
 }

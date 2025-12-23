@@ -4,7 +4,7 @@ import qbs.FileInfo
 Product {
     type: ["application", "autotest"]
     consoleApplication: true
-    destinationDirectory: "./bin"
+    destinationDirectory: "bin"
 
     Depends { name: "cpp" }
     Depends { name: "Catch2" }
