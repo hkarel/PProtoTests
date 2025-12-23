@@ -705,7 +705,7 @@ int main(int argc, char* argv[])
 {
     alog::logger().start();
 
-    alog::SaverPtr saver {new alog::CatchSaver()};
+    alog::Saver::Ptr saver {new alog::CatchSaver()};
     alog::logger().addSaver(saver);
 
     int result = Catch::Session().run(argc, argv);

@@ -20,7 +20,7 @@ void CatchSaver::flushImpl(const MessageList& messages)
         lineBuff[maxLineSize()] = '\0';
     }
 
-    FilterList filters = this->filters();
+    Filter::List filters = this->filters();
 
     for (Message* m : messages)
     {

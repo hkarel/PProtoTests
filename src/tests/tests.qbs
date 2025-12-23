@@ -1,4 +1,5 @@
 import qbs
+import qbs.FileInfo
 
 Project {
     name: "Tests"
@@ -17,10 +18,7 @@ Project {
         cpp.cxxFlags: project.cxxFlags
         cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-        property var includePaths: [
-            "./",
-        ]
-        cpp.includePaths: includePaths;
+        cpp.includePaths: ["."]
 
         files: [
             "catch2/log_saver.cpp",
@@ -29,7 +27,9 @@ Project {
 
         Export {
             Depends { name: "cpp" }
-            cpp.includePaths: exportingProduct.includePaths
+            cpp.includePaths: [
+                FileInfo.joinPaths(exportingProduct.sourceDirectory, "."),
+            ]
         }
     }
 

@@ -1,5 +1,5 @@
 import qbs
-import QbsUtl
+import qbs.FileInfo
 
 Product {
     name: "PProto"
@@ -17,19 +17,10 @@ Product {
     lib.sodium.version: project.sodiumVersion
 
     cpp.defines: project.cppDefines
-    cpp.cxxFlags: project.cxxFlags //.concat(["-fPIC"])
+    cpp.cxxFlags: project.cxxFlags
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-    property var includePaths: [
-        "./",
-        "./pproto",
-    ]
-    cpp.includePaths: includePaths;
-
-    cpp.systemIncludePaths: QbsUtl.concatPaths(
-        Qt.core.cpp.includePaths // Декларация нужна для подавления Qt warning-ов
-       ,lib.sodium.includePath
-    )
+    cpp.includePaths: [".", "pproto"]
 
     files: [
         "pproto/commands/base.cpp",
@@ -40,6 +31,8 @@ Product {
         "pproto/commands/pool.h",
         "pproto/commands/time_range.cpp",
         "pproto/commands/time_range.h",
+        "pproto/commands/time_spec.cpp",
+        "pproto/commands/time_spec.h",
         "pproto/serialize/byte_array.cpp",
         "pproto/serialize/byte_array.h",
         "pproto/serialize/functions.cpp",
@@ -72,6 +65,9 @@ Product {
 
     Export {
         Depends { name: "cpp" }
-        cpp.includePaths: exportingProduct.includePaths
+        cpp.includePaths: [
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "."),
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "pproto"),
+        ]
     }
 }

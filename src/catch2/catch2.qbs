@@ -1,5 +1,5 @@
 import qbs
-import QbsUtl
+import qbs.FileInfo
 
 Product {
     name: "Catch2"
@@ -13,11 +13,10 @@ Product {
     cpp.cxxFlags: project.cxxFlags //.concat(["-fPIC"])
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-    property var includePaths: [
-        "./catch2/src",
+    cpp.includePaths: [
+        "catch2/src",
         project.buildDirectory,
     ]
-    cpp.includePaths: includePaths;
 
     Group {
         name: "benchmark"
@@ -83,6 +82,9 @@ Product {
 
     Export {
         Depends { name: "cpp" }
-        cpp.includePaths: exportingProduct.includePaths
+        cpp.includePaths: [
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "catch2/src"),
+            project.buildDirectory
+        ]
     }
 }

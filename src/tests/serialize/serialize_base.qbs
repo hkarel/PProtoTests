@@ -1,5 +1,5 @@
 import qbs
-import QbsUtl
+import qbs.FileInfo
 
 Product {
     type: ["application", "autotest"]
@@ -16,7 +16,4 @@ Product {
 
     cpp.defines: project.cppDefines
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
-
-    // Декларация для подавления Qt warning-ов
-    cpp.systemIncludePaths: Qt.core.cpp.includePaths
 }

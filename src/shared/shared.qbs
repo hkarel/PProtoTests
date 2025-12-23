@@ -1,5 +1,5 @@
 import qbs
-import QbsUtl
+import qbs.FileInfo
 
 Product {
     name: "SharedLib"
@@ -8,21 +8,13 @@ Product {
     type: "staticlibrary"
 
     Depends { name: "cpp" }
-  //Depends { name: "Yaml" }
-    Depends { name: "Qt"; submodules: ["core", "network"] }
+    Depends { name: "Qt"; submodules: ["core", "network", "sql"] }
 
     cpp.defines: project.cppDefines
-    cpp.cxxFlags: project.cxxFlags //.concat(["-fPIC"])
+    cpp.cxxFlags: project.cxxFlags
     cpp.cxxLanguageVersion: project.cxxLanguageVersion
 
-    property var includePaths: [
-        "./",
-        "./shared",
-    ]
-    cpp.includePaths: includePaths;
-
-    // Декларация нужна для подавления Qt warning-ов
-    cpp.systemIncludePaths: Qt.core.cpp.includePaths
+    cpp.includePaths: [".", "shared"]
 
     files: [
       //"shared/config/appl_conf.cpp",
@@ -45,8 +37,6 @@ Product {
         "shared/qt/qthreadex.h",
         "shared/qt/quuidex.h",
         "shared/qt/stream_init.h",
-      //"shared/qt/version_number.cpp",
-      //"shared/qt/version_number.h",
         "shared/thread/thread_base.cpp",
         "shared/thread/thread_base.h",
         "shared/thread/thread_pool.cpp",
@@ -73,6 +63,9 @@ Product {
 
     Export {
         Depends { name: "cpp" }
-        cpp.includePaths: exportingProduct.includePaths
+        cpp.includePaths: [
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "."),
+            FileInfo.joinPaths(exportingProduct.sourceDirectory, "shared")
+        ]
     }
 }
