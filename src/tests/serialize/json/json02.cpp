@@ -65,7 +65,9 @@ struct A3
 
 TEST_CASE( "Conversion of bytearray field", "[json]" )
 {
-    pproto::data::A a;
+    using namespace pproto::data;
+
+    A a;
     a.p1 = 10;
     a.p2 = "string";
 
@@ -76,7 +78,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
         QByteArray json = a.toJson();
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":{"v1":37,"v2":0.987}})" );
 
-        pproto::data::A2 a2;
+        A2 a2;
         pproto::SResult sr = a2.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -88,7 +90,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
     }
     SECTION( "Bytearray is data struct (2)" )
     {
-        pproto::data::A2 a2;
+        A2 a2;
         a2.p1 = 10;
         a2.p2 = "string";
         a2.p3.v1 = 42;
@@ -97,7 +99,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
         QByteArray json = a2.toJson();
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":{"v1":42,"v2":121.05}})" );
 
-        pproto::data::A aa;
+        A aa;
         pproto::SResult sr = aa.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -114,7 +116,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
         QByteArray json = a.toJson();
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":[{"v1":1,"v2":0.1},{"v1":2,"v2":0.2},{"v1":3,"v2":0.3}]})" );
 
-        pproto::data::A3 a3;
+        A3 a3;
         pproto::SResult sr = a3.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -130,7 +132,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
     }
     SECTION( "Bytearray is array (2)" )
     {
-        pproto::data::A3 a3;
+        A3 a3;
         a3.p1 = 10;
         a3.p2 = "string";
         a3.p3 = {{4, 0.4}, {5, 0.5}, {6, 0.6}};
@@ -138,7 +140,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
         QByteArray json = a3.toJson();
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":[{"v1":4,"v2":0.4},{"v1":5,"v2":0.5},{"v1":6,"v2":0.6}]})" );
 
-        pproto::data::A aa;
+        A aa;
         pproto::SResult sr = aa.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -155,7 +157,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
         QByteArray json = a.toJson();
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":"bytearray long string 12345678900"})" );
 
-        pproto::data::A aa;
+        A aa;
         pproto::SResult sr = aa.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -169,7 +171,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
         QByteArray json = a.toJson();
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":"bytearray short string"})" );
 
-        pproto::data::A aa;
+        A aa;
         pproto::SResult sr = aa.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -185,7 +187,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
             QByteArray json = a.toJson();
             REQUIRE( json == R"({"p1":10,"p2":"string","p3":true})" );
 
-            pproto::data::A aa;
+            A aa;
             pproto::SResult sr = aa.fromJson(json);
             ALOG_FLUSH();
             REQUIRE( bool(sr) == true );
@@ -199,7 +201,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
             QByteArray json = a.toJson();
             REQUIRE( json == R"({"p1":10,"p2":"string","p3":true})" );
 
-            pproto::data::A aa;
+            A aa;
             pproto::SResult sr = aa.fromJson(json);
             ALOG_FLUSH();
             REQUIRE( bool(sr) == true );
@@ -213,7 +215,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
             QByteArray json = a.toJson();
             REQUIRE( json == R"({"p1":10,"p2":"string","p3":false})" );
 
-            pproto::data::A aa;
+            A aa;
             pproto::SResult sr = aa.fromJson(json);
             ALOG_FLUSH();
             REQUIRE( bool(sr) == true );
@@ -227,7 +229,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
             QByteArray json = a.toJson();
             REQUIRE( json == R"({"p1":10,"p2":"string","p3":false})" );
 
-            pproto::data::A aa;
+            A aa;
             pproto::SResult sr = aa.fromJson(json);
             ALOG_FLUSH();
             REQUIRE( bool(sr) == true );
@@ -243,7 +245,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
 
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":-125})" );
 
-        pproto::data::A aa;
+        A aa;
         pproto::SResult sr = aa.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -258,7 +260,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
 
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":18446744073709551614})" );
 
-        pproto::data::A aa;
+        A aa;
         pproto::SResult sr = aa.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -273,7 +275,7 @@ TEST_CASE( "Conversion of bytearray field", "[json]" )
 
         REQUIRE( json == R"({"p1":10,"p2":"string","p3":125.01})" );
 
-        pproto::data::A aa;
+        A aa;
         pproto::SResult sr = aa.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );

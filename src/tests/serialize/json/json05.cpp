@@ -125,11 +125,13 @@ struct DCopt
 
 TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
 {
+    using namespace pproto::data;
+
     SECTION( "Filling out DA all fields" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DA d;
+        DA d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -145,7 +147,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":{"v1":10,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DA d;
+        DA d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -161,7 +163,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":{"v1":null,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DA d;
+        DA d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -177,7 +179,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":{"v1":null,"v2":null},"p3":"AAA"})";
 
-        pproto::data::DA d;
+        DA d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -193,7 +195,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":{"v1":null,"v2":null},"p3":null})";
 
-        pproto::data::DA d;
+        DA d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -209,7 +211,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{},"p3":"AAA"})";
 
-        pproto::data::DA d;
+        DA d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -220,7 +222,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DA d;
+        DA d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -231,7 +233,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DAopt d;
+        DAopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -247,7 +249,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p3":"AAA"})";
 
-        pproto::data::DAopt d;
+        DAopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -263,7 +265,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{},"p3":"AAA"})";
 
-        pproto::data::DAopt d;
+        DAopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -274,7 +276,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DAopt d;
+        DAopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -291,7 +293,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DB d;
+        DB d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -307,7 +309,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{},"p3":"AAA"})";
 
-        pproto::data::DB d;
+        DB d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -318,7 +320,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DB d;
+        DB d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -329,7 +331,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10},"p3":"AAA"})";
 
-        pproto::data::DB d;
+        DB d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -345,7 +347,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":null},"p3":"AAA"})";
 
-        pproto::data::DB d;
+        DB d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -361,7 +363,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -377,7 +379,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -393,7 +395,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10},"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -409,7 +411,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{},"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -420,7 +422,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -436,7 +438,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":null},"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -452,7 +454,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":{"v1":null},"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -468,7 +470,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DBopt d;
+        DBopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -485,7 +487,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DC d;
+        DC d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -501,7 +503,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{},"p3":"AAA"})";
 
-        pproto::data::DC d;
+        DC d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -517,7 +519,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DC d;
+        DC d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -528,7 +530,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10},"p3":"AAA"})";
 
-        pproto::data::DC d;
+        DC d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -544,7 +546,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":null},"p3":"AAA"})";
 
-        pproto::data::DC d;
+        DC d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -560,7 +562,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10,"v2":"string 890"},"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -576,7 +578,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -592,7 +594,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":10},"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -608,7 +610,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{},"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -624,7 +626,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -640,7 +642,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":{"v1":null},"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -656,7 +658,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":{"v1":null},"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -672,7 +674,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":null,"p3":"AAA"})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -688,7 +690,7 @@ TEST_CASE( "Deserialize optional fields with NULL", "[json]" )
     {
         QByteArray json = R"({"p1":null,"p2":{},"p3":null})";
 
-        pproto::data::DCopt d;
+        DCopt d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();

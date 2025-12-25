@@ -25,11 +25,13 @@ struct F
 
 TEST_CASE( "Deserialize real number fields from NULL", "[json]" )
 {
+    using namespace pproto::data;
+
     SECTION( "Filling out F all fields as NaN (p1, p1 is NULL)" )
     {
         QByteArray json = R"({"p1":null,"p2":null})";
 
-        pproto::data::F f;
+        F f;
         pproto::SResult sr = f.fromJson(json);
 
         ALOG_FLUSH();

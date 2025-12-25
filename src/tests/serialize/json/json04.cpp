@@ -73,7 +73,9 @@ struct D
 
 TEST_CASE( "Serialize smart-pointer fields", "[json]" )
 {
-    pproto::data::C c;
+    using namespace pproto::data;
+
+    C c;
     c.p1 = 12;
     c.p2 = "string 123";
 
@@ -84,7 +86,7 @@ TEST_CASE( "Serialize smart-pointer fields", "[json]" )
     }
     SECTION( "Empty container_ptr smart-pointer" )
     {
-        c.p3 = pproto::data::A::Ptr{new pproto::data::A};
+        c.p3 = A::Ptr{new A};
         c.p3->v1 = 15;
 
         QByteArray json = c.toJson();
@@ -92,7 +94,7 @@ TEST_CASE( "Serialize smart-pointer fields", "[json]" )
     }
     SECTION( "Empty clife_ptr smart-pointer" )
     {
-        c.p4 = pproto::data::B::Ptr{new pproto::data::B};
+        c.p4 = B::Ptr{new B};
         c.p4->v1 = -58;
         c.p4->v2 = "str 6789";
 
@@ -101,10 +103,10 @@ TEST_CASE( "Serialize smart-pointer fields", "[json]" )
     }
     SECTION( "Fill all smart-pointers" )
     {
-        c.p3 = pproto::data::A::Ptr{new pproto::data::A};
+        c.p3 = A::Ptr{new A};
         c.p3->v1 = 25;
 
-        c.p4 = pproto::data::B::Ptr{new pproto::data::B};
+        c.p4 = B::Ptr{new B};
         c.p4->v1 = 34;
         c.p4->v2 = "str 6789";
 
@@ -115,11 +117,13 @@ TEST_CASE( "Serialize smart-pointer fields", "[json]" )
 
 TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
 {
+    using namespace pproto::data;
+
     SECTION( "Empty all smart-pointers" )
     {
         QByteArray json = R"({"p1":14,"p2":"string 890","p3":null,"p4":null})";
 
-        pproto::data::C c;
+        C c;
         pproto::SResult sr = c.fromJson(json);
 
         ALOG_FLUSH();
@@ -134,7 +138,7 @@ TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":"string 890"})";
 
-        pproto::data::C c;
+        C c;
         pproto::SResult sr = c.fromJson(json);
 
         ALOG_FLUSH();
@@ -144,7 +148,7 @@ TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
     {
         QByteArray json = R"({"p1":14,"p2":"string 890"})";
 
-        pproto::data::D d;
+        D d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -160,7 +164,7 @@ TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
     {
         QByteArray json = R"({"p1":12,"p2":"string 123","p3":null,"p4":{"v1":-58,"v2":"str 6789"}})";
 
-        pproto::data::C c;
+        C c;
         pproto::SResult sr = c.fromJson(json);
 
         ALOG_FLUSH();
@@ -176,7 +180,7 @@ TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
     {
         QByteArray json = R"({"p1":12,"p2":"string 123","p4":{"v1":-58,"v2":"str 6789"}})";
 
-        pproto::data::D d;
+        D d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -193,7 +197,7 @@ TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
     {
         QByteArray json = R"({"p1":12,"p2":"string 123","p3":{"v1":15,"v2":"str 234"},"p4":null})";
 
-        pproto::data::C c;
+        C c;
         pproto::SResult sr = c.fromJson(json);
 
         ALOG_FLUSH();
@@ -209,7 +213,7 @@ TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
     {
         QByteArray json = R"({"p1":12,"p2":"string 123","p3":{"v1":15,"v2":"str 234"}})";
 
-        pproto::data::D d;
+        D d;
         pproto::SResult sr = d.fromJson(json);
 
         ALOG_FLUSH();
@@ -226,7 +230,7 @@ TEST_CASE( "Deserialize smart-pointer fields", "[json]" )
     {
         QByteArray json = R"({"p1":12,"p2":"string 123","p3":{"v1":15},"p4":{"v1":-58}})";
 
-        pproto::data::C c;
+        C c;
         pproto::SResult sr = c.fromJson(json);
 
         ALOG_FLUSH();

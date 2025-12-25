@@ -27,7 +27,9 @@ struct A
 
 TEST_CASE( "Serialize A structure", "[json]" )
 {
-    pproto::data::A a;
+    using namespace pproto::data;
+
+    A a;
     a.p1 = 10;
     a.p2 = "string";
     a.p3 = "bytearray long string 12345678900";
@@ -35,7 +37,7 @@ TEST_CASE( "Serialize A structure", "[json]" )
     QByteArray json = a.toJson();
     REQUIRE( json == R"({"p1":10,"p2":"string","p3":"bytearray long string 12345678900"})" );
 
-    pproto::data::A aa;
+    A aa;
     pproto::SResult sr = aa.fromJson(json);
     ALOG_FLUSH();
     REQUIRE( bool(sr) == true );

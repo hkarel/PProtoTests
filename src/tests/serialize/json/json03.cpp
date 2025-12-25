@@ -42,11 +42,13 @@ struct Alist
 
 TEST_CASE( "Deserialize optional fields", "[json]" )
 {
+    using namespace pproto::data;
+
     SECTION( "Filling out all fields" )
     {
         QByteArray json = R"({"p1":10,"p2":"string","p3":20,"p4":"string"})";
 
-        pproto::data::A a;
+        A a;
         pproto::SResult sr = a.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -60,7 +62,7 @@ TEST_CASE( "Deserialize optional fields", "[json]" )
     {
         QByteArray json = R"({"p1":10,"p3":20})";
 
-        pproto::data::A a;
+        A a;
         pproto::SResult sr = a.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -74,7 +76,7 @@ TEST_CASE( "Deserialize optional fields", "[json]" )
     {
         QByteArray json = R"({"p1":10,"p3":20,"p4":"string"})";
 
-        pproto::data::A a;
+        A a;
         pproto::SResult sr = a.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -88,7 +90,7 @@ TEST_CASE( "Deserialize optional fields", "[json]" )
     {
         QByteArray json = R"({"p1":10,"p2":"string"})";
 
-        pproto::data::A a;
+        A a;
         pproto::SResult sr = a.fromJson(json);
         ALOG_FLUSH();
         REQUIRE_FALSE( bool(sr) == true );
@@ -97,6 +99,8 @@ TEST_CASE( "Deserialize optional fields", "[json]" )
 
 TEST_CASE( "Deserialize optional fields in list", "[json]" )
 {
+    using namespace pproto::data;
+
     SECTION( "Filling out all fields" )
     {
         QByteArray json = R"(
@@ -106,7 +110,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
                    {"p1":13,"p2":"string3","p3":23,"p4":"string3"}]}
         )";
 
-        pproto::data::Alist al;
+        Alist al;
         pproto::SResult sr = al.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -135,7 +139,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
              "v3":[{"p1":11,"p2":"string","p3":21,"p4":"string"}]}
         )";
 
-        pproto::data::Alist al;
+        Alist al;
         pproto::SResult sr = al.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -158,7 +162,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
                    {"p1":13,"p2":"string3","p3":23               }]}
         )";
 
-        pproto::data::Alist al;
+        Alist al;
         pproto::SResult sr = al.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -189,7 +193,7 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
                    {"p1":13,"p2":"string3","p3":23,"p4":"string3"}]}
         )";
 
-        pproto::data::Alist al;
+        Alist al;
         pproto::SResult sr = al.fromJson(json);
         ALOG_FLUSH();
         REQUIRE_FALSE( bool(sr) == true );
@@ -198,6 +202,8 @@ TEST_CASE( "Deserialize optional fields in list", "[json]" )
 
 TEST_CASE( "Deserialize list field from NULL", "[json]" )
 {
+    using namespace pproto::data;
+
     SECTION( "Filling out all fields" )
     {
         QByteArray json = R"(
@@ -207,7 +213,7 @@ TEST_CASE( "Deserialize list field from NULL", "[json]" )
                    {"p1":13,  "p2":"string3","p3":23,  "p4":null}]}
         )";
 
-        pproto::data::Alist al;
+        Alist al;
         pproto::SResult sr = al.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -236,7 +242,7 @@ TEST_CASE( "Deserialize list field from NULL", "[json]" )
              "v3":[{"p1":11,"p2":"string","p3":21,"p4":"string"}]}
         )";
 
-        pproto::data::Alist al;
+        Alist al;
         pproto::SResult sr = al.fromJson(json);
         ALOG_FLUSH();
         REQUIRE( bool(sr) == true );
@@ -256,7 +262,7 @@ TEST_CASE( "Deserialize list field from NULL", "[json]" )
             {"v1":10,"v2":"string","v3":null}
         )";
 
-        pproto::data::Alist al;
+        Alist al;
         al.v3 = {{1, "123", 2, "345"}, {3, "456", 4, "789"}};
 
         REQUIRE( al.v3.count() == 2 );
