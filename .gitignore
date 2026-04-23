@@ -4,3 +4,4 @@ build/
 *.autosave
 qgit_*
 .project
+.qtcreator
