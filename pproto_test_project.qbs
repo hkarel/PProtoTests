@@ -1,8 +1,8 @@
 import qbs
-import "pproto_tests_base.qbs" as PProtoDemoTests
+import "pproto_test_base.qbs" as PProtoTest
 
-PProtoDemoTests {
-    name: "PProtoTests"
+PProtoTest {
+    name: "PProtoTest"
 
     references: [
         "src/catch2/catch2.qbs",
